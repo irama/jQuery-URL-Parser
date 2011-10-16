@@ -1,5 +1,6 @@
 // JQuery URL Parser plugin - https://github.com/allmarkedup/jQuery-URL-Parser
 // Written by Mark Perkins, mark@allmarkedup.com
+// Forked by Andrew Ramsden
 // License: http://unlicense.org/ (i.e. do what you want with it!)
 
 ;(function($, undefined) {
@@ -150,7 +151,19 @@
                     seg = seg < 0 ? this.data.seg.fragment.length + seg : seg - 1; // negative segments count from the end
                     return this.data.seg.fragment[seg];                    
                 }
-            }
+            },
+			
+			// return a complete URL
+			toString : function ()
+			{
+				return
+					  this.attr('protocol') !== '' ? this.attr('protocol')+'://' : window.location.protocol +'//'
+					+ this.attr('host') !== '' ? this.attr('host') : window.location.hostname
+					+ this.attr('port') !== '' ? ':'+this.attr('port') : window.location.port !== '' ? ':'+window.location.port : ''
+					+ this.attr('path')
+					+ this.attr('query') !== '' ? '?'+this.attr('query') : window.location.search
+					+ this.attr('fragment') !== '' ? '#'+this.attr('fragment') : window.location.hash ;
+			}
             
         };
         
